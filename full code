@@ -1,0 +1,24 @@
+import pandas as pd
+df = pd.read_csv('seattle-weather.csv')
+df.head()
+df.tail()
+df.isna().sum()
+x = df.drop(columns=['date', 'weather'])
+y = df['weather']
+x
+y
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(x,y, test_size=0.3, random_state=42)
+x_train
+y_test
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression(max_iter=500)
+model.fit(x_train, y_train)
+predictions = model.predict(x_test)
+predictions
+from sklearn.metrics import classification_report
+print(classification_report(y_test,predictions))
+test_weather = {'precipitation': 0, 'temp_max': 19.4, 'temp_min': 9.4, 'wind': 2}
+test_df = pd.DataFrame([test_weather])
+test_df
+model.predict(test_df)
